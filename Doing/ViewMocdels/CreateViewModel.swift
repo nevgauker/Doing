@@ -17,16 +17,18 @@ class CreateViewModel: NSObject {
     var completionDateString:String = CompletionDate.today.rawValue
     var didChangeFiveWordsTitle  = false
     var didChangeText  = false
+    var didChangeColor = false
     var didChangeCompletionDateString = false
     var ref: DatabaseReference = Database.database().reference()
+    var selectedColorStr:String = tasksColors[0].hexValue()
     
     //update date from exsiting task
     func updateModel(task:Task) {
-        
         id = task.id
         fiveWordsTitle = task.fiveWordsTitle
         text = task.text
         completionDateString = task.completionDateString
+        selectedColorStr = task.color ?? ""
     }
     
     func createTask(completion: @escaping () -> ()) {
@@ -39,7 +41,7 @@ class CreateViewModel: NSObject {
                     let creationDateStr = Times.todayDateString()
                     let completionDate:String = Times.dateString(dateStr:completionDateString) ?? ""
                     let id = ref.child("posts").childByAutoId().key
-                    let task = ["id" : id, "fiveWordsTitle" : titleValue, "text" : textValue, "CreationDate" : creationDateStr, "completionDate": completionDate,"completionDateString": completionDateString] as [String : Any]
+                let task = ["id" : id, "fiveWordsTitle" : titleValue, "text" : textValue, "CreationDate" : creationDateStr, "completionDate": completionDate,"completionDateString": completionDateString, "color": selectedColorStr] as [String : Any]
                     self.ref.child("users").child(user_uid!).child("tasks").child(id).setValue(task)
             }
         }else {
@@ -57,6 +59,9 @@ class CreateViewModel: NSObject {
             if didChangeText {
                  valuesToUpdate["text"] = text
             }
+        if didChangeColor {
+            valuesToUpdate["color"] = selectedColorStr
+        }
             if didChangeCompletionDateString {
                 valuesToUpdate["completionDateString"] = completionDateString
                 if let date = Times.dateString(dateStr: completionDateString) {
@@ -73,6 +78,9 @@ class CreateViewModel: NSObject {
             completion()
     }
     
+    func didSelectColor(index:Int) {
+        selectedColorStr = tasksColors[index].hexValue()
+    }
     private func updateTask(valuesToUpdate:[String : String],completion: @escaping () -> ()){
         let user_uid = Auth.auth().currentUser?.uid
         if let taskId = self.id {

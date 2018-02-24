@@ -57,7 +57,7 @@ extension CreateTaskViewController:UITextViewDelegate {
 extension CreateTaskViewController:UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors.count
+        return tasksColors.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -71,7 +71,7 @@ extension CreateTaskViewController:UICollectionViewDataSource {
         frame.size.height = cell.frame.size.height - 5
         cell.colorView.frame = frame
 //        cell.colorView.center = cell.center
-        cell.colorView.backgroundColor = colors[indexPath.row]
+        cell.colorView.backgroundColor = tasksColors[indexPath.row]
         cell.colorView.layer.cornerRadius = cell.colorView.frame.size.width / 2.0
         return cell
         
@@ -80,7 +80,12 @@ extension CreateTaskViewController:UICollectionViewDataSource {
 }
 
 extension CreateTaskViewController:UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        createViewModel.didSelectColor(index:indexPath.item)
+        colorBtn.backgroundColor = UIColor(hexString: createViewModel.selectedColorStr)
+        createViewModel.didChangeColor = true
+        didPressColorBtn(UIButton())
+    }
     
 }
 
@@ -119,15 +124,20 @@ class CreateTaskViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var colorsCollectionView: UICollectionView!
+    
+    @IBOutlet weak var colorBtn: UIButton!
+    
+    @IBOutlet weak var topRightlabel: UILabel!
+    @IBOutlet weak var midRightLabel: UILabel!
 
-    var colors:[UIColor] = [UIColor]()
+
+    
     
     var createViewControllerState:CreateViewControllerState = CreateViewControllerState.create
 
     //MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        colors = [UIColor.flatRed,UIColor.flatMint,UIColor.flatBlue,UIColor.flatLime,UIColor.flatTeal,UIColor.flatGray,UIColor.flatPink,UIColor.flatPlum,UIColor.flatSand]
         text.delegate = self
         setGUI()
         setDataIfNeeded()
@@ -138,6 +148,15 @@ class CreateTaskViewController: UIViewController {
             
             
         }
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: NSNotification.Name.UIKeyboardWillShow,
+            object: nil
+        )
+        
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         print(self.addOrUpdateBtn.frame)
@@ -166,9 +185,30 @@ class CreateTaskViewController: UIViewController {
         text.layer.cornerRadius = 10.0
         fiveWordsTitle.layer.cornerRadius = 10.0
         colorsCollectionView.layer.cornerRadius = 10.0
+        colorBtn.layer.cornerRadius = 10.0
+        colorsCollectionView.alpha = 0
+        colorBtn.backgroundColor =  UIColor(hexString: createViewModel.selectedColorStr)
     }
     
     //MARK: actions
+     @IBAction func didPressColorBtn(_ sender: Any) {
+        
+        UIView.animate(withDuration:0.4, animations: {
+            
+            if self.colorsCollectionView.alpha == 1.0 {
+                self.colorsCollectionView.alpha = 0
+            }else{
+                self.colorsCollectionView.alpha = 1.0
+            }
+            if self.colorsCollectionView.alpha == 1.0 {
+                self.topRightlabel.alpha = 0
+                self.midRightLabel.text = "Select a color"
+            }else {
+                self.topRightlabel.alpha = 1.0
+                self.midRightLabel.text = "Date"
+            }
+        }, completion: nil)
+    }
     @IBAction func didPressCancelBtn(_ sender: Any) {
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
@@ -213,9 +253,25 @@ class CreateTaskViewController: UIViewController {
         if let textValue = createViewModel.text {
             self.text.text = textValue
         }
-       
+        
+        let color = UIColor(hexString: createViewModel.selectedColorStr)
+        self.colorBtn.backgroundColor = color
+        
         let arr = CompletionDate.all
         let index = arr.index(of: createViewModel.completionDateString)
         CompletionDatePicker.selectRow(index!, inComponent: 0, animated: false)
+        
+        
+        
+        
+    }
+    
+    func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.view.frame.size.height + keyboardHeight)
+        }
     }
 }

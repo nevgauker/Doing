@@ -29,6 +29,7 @@
 		DC3C9737201E3D830031E09B /* CreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9736201E3D830031E09B /* CreateViewModel.swift */; };
 		DC3C9739201F67890031E09B /* MainTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9738201F67890031E09B /* MainTasksViewModel.swift */; };
 		DC78BBAD2031D2B700438D3D /* TaskNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78BBAC2031D2B700438D3D /* TaskNode.swift */; };
+		DCA3D124203F47DE00E1BEEA /* CircularProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA3D123203F47DE00E1BEEA /* CircularProgressNode.swift */; };
 		DCAF71DC2038AAD8000CA734 /* ColorCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAF71DB2038AAD8000CA734 /* ColorCellCollectionViewCell.swift */; };
 		DCCB9B932023717200F3D880 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCB9B922023717200F3D880 /* SpriteKit.framework */; };
 		DCCB9B96202372CA00F3D880 /* TodayTomorrowScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB9B95202372CA00F3D880 /* TodayTomorrowScene.swift */; };
@@ -68,12 +69,14 @@
 		DC3C9736201E3D830031E09B /* CreateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewModel.swift; sourceTree = "<group>"; };
 		DC3C9738201F67890031E09B /* MainTasksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTasksViewModel.swift; sourceTree = "<group>"; };
 		DC78BBAC2031D2B700438D3D /* TaskNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskNode.swift; sourceTree = "<group>"; };
+		DCA3D123203F47DE00E1BEEA /* CircularProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressNode.swift; sourceTree = "<group>"; };
 		DCAF71DB2038AAD8000CA734 /* ColorCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		DCCB9B922023717200F3D880 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		DCCB9B95202372CA00F3D880 /* TodayTomorrowScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTomorrowScene.swift; sourceTree = "<group>"; };
 		DCCB9B97202372E100F3D880 /* FutureScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FutureScene.swift; sourceTree = "<group>"; };
 		DCD8FCA42032D46E00A15E61 /* Times.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Times.swift; sourceTree = "<group>"; };
 		DCD8FCA62032D9F200A15E61 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DCDD451B203C438B0022DEC9 /* Doing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Doing.entitlements; sourceTree = "<group>"; };
 		DCE4C5F12020735400F482B0 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		DCE4C5F32020736E00F482B0 /* TaskView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskView.xib; sourceTree = "<group>"; };
 		DCE4C5F52020DBC300F482B0 /* ConstsAndEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstsAndEnums.swift; sourceTree = "<group>"; };
@@ -139,6 +142,7 @@
 		DC3C970E201E05D50031E09B /* Doing */ = {
 			isa = PBXGroup;
 			children = (
+				DCDD451B203C438B0022DEC9 /* Doing.entitlements */,
 				DCD8FCA32032D45200A15E61 /* Utilities */,
 				DC78BBAB2031D29D00438D3D /* Nodes */,
 				DCCB9B94202372A200F3D880 /* Scenes */,
@@ -226,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				DC78BBAC2031D2B700438D3D /* TaskNode.swift */,
+				DCA3D123203F47DE00E1BEEA /* CircularProgressNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -293,7 +298,13 @@
 				TargetAttributes = {
 					DC3C970B201E05D40031E09B = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 3978JEAFBL;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -397,6 +408,7 @@
 				DC13BFBA2033BBDA005472D4 /* TasksScene.swift in Sources */,
 				DC3C9739201F67890031E09B /* MainTasksViewModel.swift in Sources */,
 				DCCB9B96202372CA00F3D880 /* TodayTomorrowScene.swift in Sources */,
+				DCA3D124203F47DE00E1BEEA /* CircularProgressNode.swift in Sources */,
 				DCAF71DC2038AAD8000CA734 /* ColorCellCollectionViewCell.swift in Sources */,
 				DCD8FCA52032D46E00A15E61 /* Times.swift in Sources */,
 				DC0B999F2039CF2D006C2C7E /* TutorialViewController.swift in Sources */,
@@ -502,6 +514,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -528,6 +541,9 @@
 			baseConfigurationReference = 9B5B228B271F1211B640E836 /* Pods-Doing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Doing/Doing.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3978JEAFBL;
 				INFOPLIST_FILE = Doing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RN.Doing.ios;
@@ -541,6 +557,9 @@
 			baseConfigurationReference = 1698C69945CFB99BFDC2C4BB /* Pods-Doing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Doing/Doing.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 3978JEAFBL;
 				INFOPLIST_FILE = Doing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RN.Doing.ios;

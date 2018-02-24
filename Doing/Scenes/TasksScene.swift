@@ -19,9 +19,12 @@ class TasksScene: SKScene {
     
     var selectedNode:TaskNode = TaskNode()
     var tasksNodes:[SKShapeNode] = [SKShapeNode]()
+    
     var containerViewController:UIViewController?
     var panGestureRecognizer:UIPanGestureRecognizer?
     var tapGestureRecognizer:UITapGestureRecognizer?
+    var completionTimeChangeTimer:Timer = Timer()
+    var timerIsRunning:Bool = false
     
     var scrollView:UIScrollView?
     
@@ -37,7 +40,6 @@ class TasksScene: SKScene {
     func sceneSetup(vc:UIViewController) {
         self.physicsBody = SKPhysicsBody (edgeLoopFrom: self.frame)
         self.containerViewController = vc
-        
     }
     
     func  drawNodesFortasks(tasks:[Task]){
@@ -48,7 +50,7 @@ class TasksScene: SKScene {
         }
         
         for task in tasks {
-            
+           // let rect:CGRect = CGRect(x: 0, y: 0, width: 90.0, height: 90.0)
             let taskNode = TaskNode(circleOfRadius: 45.0)
             taskNode.setPhysicsBody()
             taskNode.taskId = task.id
@@ -114,7 +116,7 @@ class TasksScene: SKScene {
     }
     
     func degToRad(degree: Double) -> CGFloat {
-        return CGFloat(degree / 180.0 * M_PI)
+        return CGFloat(degree / 180.0 * Double.pi)
     }
     
     func selectNodeForTouch(touchLocation : CGPoint) {
@@ -141,8 +143,40 @@ class TasksScene: SKScene {
     func panForTranslation(translation : CGPoint) {
         let position = selectedNode.position
         if selectedNode.name == kAnimalNodeName {
-            selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+            
+            
+            if canMove(position: position, translation: translation, size:selectedNode.frame.size) {
+                selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+            }
         }
+    }
+    func canMove(position:CGPoint,translation : CGPoint, size:CGSize)->Bool {
+        
+       
+        var x = (position.x + translation.x) - (size.width/2)
+        var y = (position.y + translation.y) - (size.height/2)
+        if x < 0 || y < 0 {
+            return false
+        }
+        x = (position.x + translation.x) + (size.width/2)
+        y = (position.y + translation.y) + (size.height/2)
+        if x > self.frame.size.width || y > self.frame.size.height {
+            return false
+        }
+        return true
+    }
+    
+    func startTimer() {
+        
+        completionTimeChangeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {_ in
+            
+        })
+        
+    }
+    func stopTimer() {
+        _ = completionTimeChangeTimer.isValid
+        completionTimeChangeTimer = Timer()
+        
     }
 }
 

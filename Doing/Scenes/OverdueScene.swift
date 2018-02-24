@@ -9,5 +9,9 @@
 import UIKit
 
 class OverdueScene: TasksScene {
-
+    override func sceneSetup(vc:UIViewController) {
+        name = "Overdue"
+        super.sceneSetup(vc: vc)
+    }
+    
 }

@@ -28,6 +28,12 @@ public enum CreateViewControllerState:Int {
 
 public let dateFormat:String = "dd.MM.yyyy"
 
+public let tasksColors:[UIColor] = [UIColor.flatRed,UIColor.flatMint,UIColor.flatBlue,
+                        UIColor.flatLime,UIColor.flatTeal,UIColor.flatGray,
+                        UIColor.flatPink,UIColor.flatPlum,UIColor.flatSand]
+
+
+
 class ConstsAndEnums: NSObject {
     
 

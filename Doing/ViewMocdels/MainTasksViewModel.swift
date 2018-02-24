@@ -40,7 +40,8 @@ class MainTasksViewModel: NSObject {
                     let completionDateString = taskObject?["completionDateString"] as? String ?? ""
                     let creationDate = taskObject?["creationDate"] as? String ?? ""
                     let completionDate = taskObject?["completionDate"] as? String ?? ""
-                    let task = Task(id: id, fiveWordsTitle: fiveWordsTitle, text: text, completionDate: completionDate, completionDateString: completionDateString, creationDate:creationDate)
+                    let color = taskObject?["color"] as? String ?? ""
+                    let task = Task(id: id, fiveWordsTitle: fiveWordsTitle, text: text, completionDate: completionDate, completionDateString: completionDateString, creationDate:creationDate, color:color)
                     if task.isOverdue() {
                         self.overdueTasks[id] = task
                     }else if task.completionDateString == CompletionDate.inTheFuture.rawValue {

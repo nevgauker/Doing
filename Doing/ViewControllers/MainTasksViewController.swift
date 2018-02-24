@@ -70,68 +70,48 @@ class MainTasksViewController: UIViewController,UIScrollViewDelegate,UIGestureRe
         performSegue(withIdentifier: "CreateTaskSegue", sender: self)
     }
     //MARK: setup
+    
+    func ViewSetup(view:SKView) {
+        view.layer.borderColor = UIColor.flatGray.cgColor
+        view.layer.borderWidth = 1.0
+    }
     func scenesSetup() {
+        
         todayTomorrowScene = TodayTomorrowScene(size: todayTomorrowView.bounds.size)
-        //todayTomorrowScene?.backgroundColor = UIColor.red
-        todayTomorrowView.showsFPS = true
-        todayTomorrowView.showsNodeCount = true
-        todayTomorrowView.presentScene(todayTomorrowScene)
         todayTomorrowScene?.sceneSetup(vc:self)
-        todayTomorrowScene?.isUserInteractionEnabled = true
-        todayTomorrowScene?.scrollView = self.scrollView
-        
-        if let recog:UIPanGestureRecognizer = todayTomorrowScene?.panGestureRecognizer {
-            recog.delegate = self
+        todayTomorrowView.presentScene(todayTomorrowScene)
+        ViewSetup(view: todayTomorrowView)
+        setDelegateForGestures(scene: todayTomorrowScene!)
+        setSCrollVIew(scene: todayTomorrowScene!)
 
-        }
-        if let recog:UITapGestureRecognizer = todayTomorrowScene?.tapGestureRecognizer {
-            recog.delegate = self
-            
-        }
-        
-        
         futureScene = FutureScene(size: futureView.bounds.size)
-       // futureScene?.backgroundColor = UIColor.green
-        futureView.showsFPS = true
-        futureView.showsNodeCount = true
         futureView.presentScene(futureScene)
         futureScene?.sceneSetup(vc:self)
-        futureScene?.isUserInteractionEnabled = true
-        futureScene?.scrollView = self.scrollView
-        
-        if let recog:UIPanGestureRecognizer = futureScene?.panGestureRecognizer {
-            recog.delegate = self
-            
-        }
-        if let recog:UITapGestureRecognizer = futureScene?.tapGestureRecognizer {
-            recog.delegate = self
-            
-        }
-
-        
+        ViewSetup(view: futureView)
+        setDelegateForGestures(scene: futureScene!)
+        setSCrollVIew(scene: futureScene!)
+      
         overdueScene = OverdueScene(size: overdueView.bounds.size)
-       // overdueScene?.backgroundColor = UIColor.blue
-        overdueView.showsFPS = true
-        overdueView.showsNodeCount = true
         overdueView.presentScene(overdueScene)
         overdueScene?.sceneSetup(vc:self)
-        overdueScene?.isUserInteractionEnabled = true
-        overdueScene?.scrollView = self.scrollView
-        
-        if let recog:UIPanGestureRecognizer = overdueScene?.panGestureRecognizer {
-            recog.delegate = self
-            
-        }
-        if let recog:UITapGestureRecognizer = overdueScene?.tapGestureRecognizer {
-            recog.delegate = self
-            
-        }
-
-
-
+        ViewSetup(view: futureView)
+        setDelegateForGestures(scene: overdueScene!)
+        setSCrollVIew(scene: overdueScene!)
     }
-    
-    
+    func setDelegateForGestures(scene:TasksScene) {
+        
+        if let recog:UIPanGestureRecognizer = scene.panGestureRecognizer {
+            recog.delegate = self
+            
+        }
+        if let recog:UITapGestureRecognizer = scene.tapGestureRecognizer {
+            recog.delegate = self
+            
+        }
+    }
+    func setSCrollVIew(scene:TasksScene) {
+        scene.scrollView = self.scrollView
+    }
     
     
     //MARK: UIScrollViewDelegate

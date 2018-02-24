@@ -15,12 +15,14 @@ class Task: NSObject {
     var completionDate:String?
     var completionDateString:String
     var creationDate:String?
+    var color:String?
     
-    init(id:String,fiveWordsTitle:String, text:String,completionDate:String,completionDateString:String,creationDate:String) {
+    init(id:String,fiveWordsTitle:String, text:String,completionDate:String,completionDateString:String,creationDate:String, color:String) {
         self.fiveWordsTitle = fiveWordsTitle
         self.text = text
         self.id = id
         self.completionDateString = completionDateString
+        self.color = color
         if self.completionDate != "" {
             self.completionDate = completionDate
         }
