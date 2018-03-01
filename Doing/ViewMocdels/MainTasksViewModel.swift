@@ -12,6 +12,10 @@ import FirebaseAuth
 
 class MainTasksViewModel: NSObject {
     
+    var ref: DatabaseReference = Database.database().reference()
+
+    
+    
     var todayTomorrowTasks:[String : Task] = [String : Task]()
     var futureTasks:[String : Task] = [String : Task]()
     var overdueTasks:[String : Task] = [String : Task]()
@@ -53,6 +57,18 @@ class MainTasksViewModel: NSObject {
                 }
             }
         })
+    }
+    
+    func updateCompletionTime(taskId:String,dateStr:String){
+        let user_uid = Auth.auth().currentUser?.uid
+        
+        var completionDate:String = ""
+        if dateStr == CompletionDate.today.rawValue {
+            
+            completionDate = Times.todayDateString()
+        }
+        let valuesToUpdate = ["completionDateString": dateStr, "completionDate" : completionDate] as [String : Any]
+        self.ref.child("users").child(user_uid!).child("tasks").child("\(taskId)").updateChildValues(valuesToUpdate)
     }
 }
 

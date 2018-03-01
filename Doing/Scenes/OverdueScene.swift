@@ -14,4 +14,22 @@ class OverdueScene: TasksScene {
         super.sceneSetup(vc: vc)
     }
     
+    override func triggerCompletionDateChange() {
+        let position = selectedNode.frame.origin
+        let x = position.x
+        if (x + selectedNode.frame.size.width) >= (self.frame.size.width - 0.4) {
+            //enable
+            enableCompletionDate(on: true)
+            completionDateStr = CompletionDate.today.rawValue
+
+            
+        }else {
+            //disable
+            enableCompletionDate(on: false)
+            completionDateStr = ""
+
+        }
+    }
+   
+    
 }

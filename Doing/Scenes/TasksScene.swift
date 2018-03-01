@@ -14,7 +14,6 @@ import SpriteKit
 private let kAnimalNodeName = "movable"
 
 
-
 class TasksScene: SKScene {
     
     var selectedNode:TaskNode = TaskNode()
@@ -23,8 +22,9 @@ class TasksScene: SKScene {
     var containerViewController:UIViewController?
     var panGestureRecognizer:UIPanGestureRecognizer?
     var tapGestureRecognizer:UITapGestureRecognizer?
-    var completionTimeChangeTimer:Timer = Timer()
-    var timerIsRunning:Bool = false
+    
+    var shouldUpdateCompletionTime = false
+    var completionDateStr:String = ""
     
     var scrollView:UIScrollView?
     
@@ -104,14 +104,28 @@ class TasksScene: SKScene {
                 var translation = recognizer.translation(in: recognizer.view!)
                 translation = CGPoint(x: translation.x, y: -translation.y)
                 self.panForTranslation(translation: translation)
+                triggerCompletionDateChange()
             }
             
             
             recognizer.setTranslation(.zero, in: recognizer.view)
         } else if recognizer.state == .ended {
+            
+           if shouldUpdateCompletionTime {
+                enableCompletionDate(on: false)
+                updateCompetionTime(taskId: selectedNode.taskId, dateStr:completionDateStr)
+           }
+            
             selectedNode.physicsBody?.isDynamic = true
             selectedNode = TaskNode()
             self.scrollView?.isScrollEnabled = true
+        }
+    }
+    func updateCompetionTime(taskId:String?, dateStr:String) {
+        if let id = taskId {
+            if let vc:MainTasksViewController = self.containerViewController as? MainTasksViewController  {
+                vc.updateCompletionTime(taskId:id, dateStr:dateStr)
+            }
         }
     }
     
@@ -144,7 +158,6 @@ class TasksScene: SKScene {
         let position = selectedNode.position
         if selectedNode.name == kAnimalNodeName {
             
-            
             if canMove(position: position, translation: translation, size:selectedNode.frame.size) {
                 selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
             }
@@ -152,31 +165,33 @@ class TasksScene: SKScene {
     }
     func canMove(position:CGPoint,translation : CGPoint, size:CGSize)->Bool {
         
-       
         var x = (position.x + translation.x) - (size.width/2)
         var y = (position.y + translation.y) - (size.height/2)
-        if x < 0 || y < 0 {
+        if x <= 0 || y <= 0 {
             return false
         }
+        
         x = (position.x + translation.x) + (size.width/2)
         y = (position.y + translation.y) + (size.height/2)
+        
         if x > self.frame.size.width || y > self.frame.size.height {
             return false
         }
+        
         return true
     }
+    func triggerCompletionDateChange() {
+        
+    }
     
-    func startTimer() {
-        
-        completionTimeChangeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {_ in
-            
-        })
-        
+    func enableCompletionDate(on:Bool) {
+        if on {
+            selectedNode.strokeColor = UIColor.flatRed
+        }else {
+            selectedNode.strokeColor = UIColor.flatWhite
+        }
+        shouldUpdateCompletionTime = on
     }
-    func stopTimer() {
-        _ = completionTimeChangeTimer.isValid
-        completionTimeChangeTimer = Timer()
-        
-    }
+    
 }
 

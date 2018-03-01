@@ -14,4 +14,20 @@ class TodayTomorrowScene: TasksScene {
         super.sceneSetup(vc: vc)
     }
     
+    
+    override func triggerCompletionDateChange() {
+        let position = selectedNode.frame.origin
+        let x = position.x
+        if (x + selectedNode.frame.size.width) >= (self.frame.size.width - 0.4) {
+            enableCompletionDate(on: true)
+            completionDateStr = CompletionDate.inTheFuture.rawValue
+
+            
+        }else {
+            //disable
+            enableCompletionDate(on: false)
+            completionDateStr = ""
+
+        }
+    }
 }

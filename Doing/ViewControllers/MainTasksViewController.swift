@@ -94,7 +94,7 @@ class MainTasksViewController: UIViewController,UIScrollViewDelegate,UIGestureRe
         overdueScene = OverdueScene(size: overdueView.bounds.size)
         overdueView.presentScene(overdueScene)
         overdueScene?.sceneSetup(vc:self)
-        ViewSetup(view: futureView)
+        ViewSetup(view: overdueView)
         setDelegateForGestures(scene: overdueScene!)
         setSCrollVIew(scene: overdueScene!)
     }
@@ -161,7 +161,6 @@ class MainTasksViewController: UIViewController,UIScrollViewDelegate,UIGestureRe
         }
         
     }
-    
     //Mark:UIGestureRecognizerDelegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return true
@@ -173,5 +172,9 @@ class MainTasksViewController: UIViewController,UIScrollViewDelegate,UIGestureRe
         -> Bool {
             return true
             
+    }
+    
+    func updateCompletionTime(taskId:String,dateStr:String){
+        mainTasksViewModel.updateCompletionTime(taskId:taskId,dateStr:dateStr)
     }
 }
